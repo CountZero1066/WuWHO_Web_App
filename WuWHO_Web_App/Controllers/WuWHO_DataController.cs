@@ -32,7 +32,15 @@ namespace WuWHO_Web_App.Controllers
 
             var FiveMinAgo = DateTime.Now.AddHours(-0.1);
             ViewBag.devices_in_last_5_minutes = _context.tbl_environment_4.Where(m => m.MAC_ID != "end of statement").Where(m => m.time_rec >= FiveMinAgo).Select(m=>m.MAC_ID).Distinct().Count();
+
+
+            
+            int num_devices = _context.tbl_environment_4.Where(m => m.MAC_ID != "end of statement").Where(m => m.time_rec >= FiveMinAgo).Select(m => m.MAC_ID).Distinct().Count();
+            string tweet_body = "";
+            tweet_body = "Total number of unique Device detections = " + Unique_devices.ToString();
            
+            TwitterPost.Sendtweet(tweet_body);
+
             return View();
         }
         

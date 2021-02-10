@@ -9,8 +9,11 @@ using WuWHO_Web_App.Models;
 
 namespace WuWHO_Web_App.Controllers
 {
+
     public class HomeController : Controller
     {
+        
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -33,5 +36,7 @@ namespace WuWHO_Web_App.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        
     }
 }

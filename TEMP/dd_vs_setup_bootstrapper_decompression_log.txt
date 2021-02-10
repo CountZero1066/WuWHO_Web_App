@@ -1,0 +1,9 @@
+[2/6/2021, 17:56:37] === Logging started: 2021/02/06 17:56:37 ===
+[2/6/2021, 17:56:37] Executable: C:\Users\HAL 9000\Desktop\WuWHO_Web_App\TMP\273c76155c7f4bfab126d539e543e151\vs_setup_bootstrapper.exe v15.9.28307.1342
+[2/6/2021, 17:56:37] --- logging level: standard ---
+[2/6/2021, 17:56:37] Directory 'C:\Users\HAL 9000\Desktop\WuWHO_Web_App\TMP\0986e164d9f1494d9d3afe7f12dc407c' has been selected for file extraction
+[2/6/2021, 17:56:37] Extracting files to: C:\Users\HAL 9000\Desktop\WuWHO_Web_App\TMP\0986e164d9f1494d9d3afe7f12dc407c
+[2/6/2021, 17:56:37] Extraction took 219 milliseconds
+[2/6/2021, 17:56:37] The entire Box execution exiting with result code: 0x0
+[2/6/2021, 17:56:37] Launched extracted application exiting with result code: 0x0
+[2/6/2021, 17:56:37] === Logging stopped: 2021/02/06 17:56:37 ===
