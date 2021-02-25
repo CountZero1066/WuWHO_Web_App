@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace WuWHO_Web_App
 {
-    public class TwitterPost
+    public class Twitter
     {
         const string TwitterApiBaseUrl = "https://api.twitter.com/1.1/";
         readonly string consumerKey, consumerKeySecret, accessToken, accessTokenSecret;
         readonly HMACSHA1 sigHasher;
         readonly DateTime epochUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        
-        public TwitterPost(string consumerKey, string consumerKeySecret, string accessToken, string accessTokenSecret)
+
+        public Twitter(string consumerKey, string consumerKeySecret, string accessToken, string accessTokenSecret)
         {
             this.consumerKey = "n6vhsJ4BKULXjECUpkZ7n9lvq";
             this.consumerKeySecret = "ORA3Jfg6E1rg9tuIaIOcAUrbIZPFEnkO7bnyKuo6j7XwBwJilH";
@@ -24,7 +24,7 @@ namespace WuWHO_Web_App
 
             sigHasher = new HMACSHA1(new ASCIIEncoding().GetBytes(string.Format("{0}&{1}", consumerKeySecret, accessTokenSecret)));
         }
-        
+
         public Task<string> Tweet(string text)
         {
             var data = new Dictionary<string, string> {
@@ -39,6 +39,7 @@ namespace WuWHO_Web_App
         {
             var fullUrl = TwitterApiBaseUrl + url;
 
+            
             var timestamp = (int)((DateTime.UtcNow - epochUtc).TotalSeconds);
 
             data.Add("oauth_consumer_key", consumerKey);
@@ -47,16 +48,22 @@ namespace WuWHO_Web_App
             data.Add("oauth_nonce", "a"); 
             data.Add("oauth_token", accessToken);
             data.Add("oauth_version", "1.0");
-            
+
+            // Generate the OAuth signature and add it to our payload.
             data.Add("oauth_signature", GenerateSignature(fullUrl, data));
-            
+
+            // Build the OAuth HTTP Header from the data.
             string oAuthHeader = GenerateOAuthHeader(data);
 
+            // Build the form data (exclude OAuth stuff that's already in the header).
             var formData = new FormUrlEncodedContent(data.Where(kvp => !kvp.Key.StartsWith("oauth_")));
 
             return SendRequest(fullUrl, oAuthHeader, formData);
         }
-        
+
+        /// <summary>
+        /// Generate an OAuth signature from OAuth header values.
+        /// </summary>
         string GenerateSignature(string url, Dictionary<string, string> data)
         {
             var sigString = string.Join(
@@ -77,6 +84,9 @@ namespace WuWHO_Web_App
             return Convert.ToBase64String(sigHasher.ComputeHash(new ASCIIEncoding().GetBytes(fullSigData.ToString())));
         }
 
+        /// <summary>
+        /// Generate the raw OAuth HTML header from the values (including signature).
+        /// </summary>
         string GenerateOAuthHeader(Dictionary<string, string> data)
         {
             return "OAuth " + string.Join(
@@ -87,7 +97,10 @@ namespace WuWHO_Web_App
                     .OrderBy(s => s)
             );
         }
-        
+
+        /// <summary>
+        /// Send HTTP Request and return the response.
+        /// </summary>
         async Task<string> SendRequest(string fullUrl, string oAuthHeader, FormUrlEncodedContent formData)
         {
             using (var http = new HttpClient())
@@ -103,7 +116,7 @@ namespace WuWHO_Web_App
         public static void Sendtweet(string tweetbody)
         {
 
-            var postTweet = new TwitterPost("n6vhsJ4BKULXjECUpkZ7n9lvq", "ORA3Jfg6E1rg9tuIaIOcAUrbIZPFEnkO7bnyKuo6j7XwBwJilH", "1355915412198871042-Kh7f1QqfgSirlva7SQmy07vrluS32e", "bqcAuILA2U3KJSqSSqsWUke075X0pqzEDL7g0drJuTWhM");
+            var postTweet = new Twitter("n6vhsJ4BKULXjECUpkZ7n9lvq", "ORA3Jfg6E1rg9tuIaIOcAUrbIZPFEnkO7bnyKuo6j7XwBwJilH", "1355915412198871042-Kh7f1QqfgSirlva7SQmy07vrluS32e", "bqcAuILA2U3KJSqSSqsWUke075X0pqzEDL7g0drJuTWhM");
             var response = postTweet.Tweet(tweetbody);
             Console.WriteLine(response);
 

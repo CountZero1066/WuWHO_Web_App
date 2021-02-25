@@ -35,12 +35,13 @@ namespace WuWHO_Web_App.Controllers
 
 
             
-            int num_devices = _context.tbl_environment_4.Where(m => m.MAC_ID != "end of statement").Where(m => m.time_rec >= FiveMinAgo).Select(m => m.MAC_ID).Distinct().Count();
+           // int num_devices = _context.tbl_environment_4.Where(m => m.MAC_ID != "end of statement").Where(m => m.time_rec >= FiveMinAgo).Select(m => m.MAC_ID).Distinct().Count();
             //  string tweet_body = "";
             //  tweet_body = "Testing the Twitter API Class in ASP = " + Unique_devices.ToString();
 
             // TwitterPost.Sendtweet(tweet_body);
-            TwitterPost.Sendtweet("Testing: Controller Action");
+            
+            Twitter.Sendtweet("Total Detections: " + total_detect.ToString());
             return View();
         }
         
