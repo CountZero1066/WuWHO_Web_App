@@ -24,13 +24,13 @@ namespace WuWHO_Web_App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           // services.AddHostedService<Back_Ground_Service>();
+           
             services.AddControllersWithViews();
             services.AddDbContext<WuWHO_Context>(options =>
             {
                 options.UseMySql(Configuration.GetConnectionString("WuWHO_MySQL"));
             });
-            //  services.AddSingleton<IHostedService, Hosted_Service_Twitter>();
+            
             services.AddHostedService<Back_Ground_Service>();
         }
 

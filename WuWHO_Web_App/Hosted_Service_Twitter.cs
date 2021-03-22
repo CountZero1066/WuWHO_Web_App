@@ -9,6 +9,8 @@ using WuWHO_Web_App.Data;
 
 namespace WuWHO_Web_App
 {
+    //runs in background and is called at startup. Will invoke the Twitter.cs class every five minutes and rescopes a database 
+    //context instance because the task is asynchronous
     public class Hosted_Service_Twitter : IHostedService
     {
         

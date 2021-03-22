@@ -7,7 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WuWHO_Web_App.Data;
 using WuWHO_Web_App.Models;
+using System.Web;
 
+
+//Besides the 'Count_devices' and 'Chart_examples' controller actions, the rest were automatically generated via scaffolding
 
 namespace WuWHO_Web_App.Controllers
 {
@@ -24,30 +27,46 @@ namespace WuWHO_Web_App.Controllers
         [Route("/Count")]
         public IActionResult Count_devices()
         {
+            //The following controller action queries the remote MySQL database via LINQ queries, these query results are displayed on the 'Count_Devices' view
+
+            //The first query simply counts all records in the database table, excluding any "end of statement" entries
             int total_detect = _context.tbl_environment_4.Where(m => m.MAC_ID != "end of statement").Count();
             ViewBag.total_num = total_detect;
 
+            //Counts the total number of distinct MAC IDs recorded in the database
             int Unique_devices = _context.tbl_environment_4.Select(m => m.MAC_ID).Distinct().Count();
             ViewBag.the_count = Unique_devices;
 
+            // Counts the number of distinct devices detected within the last five minutes
             var FiveMinAgo = DateTime.Now.AddHours(-0.1);
             ViewBag.devices_in_last_5_minutes = _context.tbl_environment_4.Where(m => m.MAC_ID != "end of statement").Where(m => m.time_rec >= FiveMinAgo).Select(m=>m.MAC_ID).Distinct().Count();
 
-
-            
-           // int num_devices = _context.tbl_environment_4.Where(m => m.MAC_ID != "end of statement").Where(m => m.time_rec >= FiveMinAgo).Select(m => m.MAC_ID).Distinct().Count();
-            //  string tweet_body = "";
-            //  tweet_body = "Testing the Twitter API Class in ASP = " + Unique_devices.ToString();
-
-            // TwitterPost.Sendtweet(tweet_body);
-            
-            Twitter.Sendtweet("Total Detections: " + total_detect.ToString());
+           
             return View();
         }
-        
-        
-        // GET: WuWHO_Data
-        public async Task<IActionResult> Index()
+
+
+        public IActionResult Chart_example()
+        {
+            //The following LINQ queries are used in teh Chart_example view and are sued in the Highchart graphs
+            //The first query counts the number of MAC detections that are timestamped as belonging to today and groups them by the hour associated with them 
+            var my_data_today = _context.tbl_environment_4.Where(m => m.time_rec.Date == DateTime.Today).Where(m => m.MAC_ID != "end of statement").GroupBy(m => m.time_rec.Hour).Select(g => new MyClass{name = g.Key, count = g.Count() }).ToList();
+            ViewBag.todays_data = my_data_today;
+
+            //The second query is identical to the first excempt it counts and groups all of yesterdays detections
+            var my_data_yesterday = _context.tbl_environment_4.Where(m => m.time_rec.Date == DateTime.Today.AddDays(-1)).Where(m => m.MAC_ID != "end of statement").GroupBy(m => m.time_rec.Hour).Select(g => new MyClass { name = g.Key, count = g.Count() }).ToList();
+            ViewBag.yesterdays_data = my_data_yesterday;
+
+            //The third query is used in the Highchart gauge and infers the number of Unique devices detected in the last five minutes
+            var FiveMinAgo = DateTime.Now.AddHours(-0.1);
+            ViewBag.devices_in_last_5_minutes = _context.tbl_environment_4.Where(m => m.MAC_ID != "end of statement").Where(m => m.time_rec >= FiveMinAgo).Select(m => m.MAC_ID).Distinct().Count();
+
+            return View("/Views/Chart_data/Chart_example.cshtml");
+        }
+
+
+            // GET: WuWHO_Data
+            public async Task<IActionResult> Index()
         {
             return View(await _context.tbl_environment_4.ToListAsync());
         }

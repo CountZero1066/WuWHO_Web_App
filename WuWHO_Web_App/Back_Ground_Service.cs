@@ -13,7 +13,7 @@ namespace WuWHO_Web_App
 
     {
 
-       
+
 
         private readonly IServiceProvider _context;
 
@@ -40,7 +40,7 @@ namespace WuWHO_Web_App
                     try
                     {
                         int total_detect = cur_context.tbl_environment_4.Where(m => m.MAC_ID != "end of statement").Count();
-                         Twitter.Sendtweet("Total Detections: " + total_detect.ToString());
+                        Twitter.Sendtweet("Total Detections: " + total_detect.ToString());
                     }
                     catch (Exception ex)
                     {

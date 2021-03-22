@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace WuWHO_Web_App
 {
+    //Courtesy of Mr Daniel Tuppeny https://blog.dantup.com/2016/07/simplest-csharp-code-to-post-a-tweet-using-oauth/
     public class Twitter
     {
         const string TwitterApiBaseUrl = "https://api.twitter.com/1.1/";

@@ -1,0 +1,270 @@
+﻿@model IEnumerable<WuWHO_Web_App.Models.WuWHO_db>
+
+@{
+    ViewData["Title"] = "Chart_example";
+
+    var unique_in_5_min = ViewBag.devices_in_last_5_minutes;
+    var testdata2 = ViewBag.todays_data;
+    var yesterday = ViewBag.yesterdays_data;
+
+}
+
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
+
+
+
+<section class="mbr-section mbr-section--relative mbr-after-navbar" id="msg-box4-8" data-rv-view="19" style="background-color: rgb(40, 50, 78);">
+
+    <div class="mbr-section__container mbr-section__container--isolated container" style="padding-top: 93px; padding-bottom: 124px;">
+        <div class="row">
+            <div class="mbr-box mbr-box--fixed mbr-box--adapted">
+                <div class="mbr-box__magnet mbr-box__magnet--top-right mbr-section__left col-sm-6 image-size" style="width: 60%;">
+                    <figure class="mbr-figure mbr-figure--adapted mbr-figure--caption-inside-bottom mbr-figure--full-width">
+
+                        <figure class="highcharts-figure">
+                            <div id="container-speed" class="chart-container"></div>
+
+                            <p class="highcharts-description">
+
+                            </p>
+                        </figure>
+
+                        <figcaption class="mbr-figure__caption">
+                            <small class="mbr-figure__caption-small">HighCharts Gauge Graph</small>
+                        </figcaption>
+
+                    </figure>
+                    
+                </div>
+
+                
+
+                <div class="mbr-box__magnet mbr-class-mbr-box__magnet--center-left col-sm-6 content-size mbr-section__right">
+                    <div class="mbr-section__container mbr-section__container--middle">
+                        <div class="mbr-header mbr-header--auto-align mbr-header--wysiwyg">
+                            <h3 class="mbr-header__text" style="color:white">Visualize data for No: of unique devices detected in last 5 min!</h3>
+
+                        </div>
+                    </div>
+                    <div class="mbr-section__container mbr-section__container--middle">
+                        <div class="mbr-article mbr-article--auto-align mbr-article--wysiwyg"><p style="color:white">Uses the Highcharts Solid Gauge, bound with data drawn from the WuWHO database to visually display the current number of unique devices detected by the ESP32 based sensors&nbsp;&nbsp;</pstyle="color:white"></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section" id="image2-5" data-rv-view="40">
+    <div class="mbr-section__container container mbr-section__container--isolated">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <figure class="mbr-figure mbr-figure--wysiwyg mbr-figure--full-width mbr-figure--caption-inside-bottom">
+
+                    <div>
+
+                        <figure class="highcharts-figure">
+                            <div id="container"></div>
+                            <p class="highcharts-description">
+
+                            </p>
+                        </figure>
+
+                        
+                    </div>
+                    
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section mbr-section--relative mbr-section--fixed-size" id="content5-a" data-rv-view="25" style="background-color: rgb(40, 50, 78);">
+
+    <div class="mbr-section__container container mbr-section__container--first" style="padding-top: 93px;">
+        <div class="mbr-header mbr-header--wysiwyg row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h3 class="mbr-header__text" style="color:white">Highcharts Line Chart&nbsp;</h3>
+
+            </div>
+        </div>
+    </div>
+    <div class="mbr-section__container container mbr-section__container--last" style="padding-bottom: 93px;">
+        <div class="row">
+            <div class="mbr-article mbr-article--wysiwyg col-sm-8 col-sm-offset-2"><p style="color:white">Useful for comparing two different data sets in the one graphic. Chart is bound to data drawn from the WuWHO database that counts device detections for the current day and yesterday, and groups them based on hour. The legend on the base of the graph is interactive and allows a user to isolate either todays data or yesterdays data.&nbsp; The line chart utility also allows users to print and save chart data for their own uses outside of the web application.</p></div>
+        </div>
+    </div>
+
+</section>
+
+
+
+<!--
+    The following Javascript takes Viewbag data sent by the controller action and uses it as the data source for the Highchart graphs
+    The structure of the Javascript is adapted from the graph demos on Highcharts website, however the Javascript was adapted to use data drawn
+    from the database, rahter than the static compile-time data that was included in the examples
+-->
+<script>
+    var unique_devices = JSON.parse('@Html.Raw(Json.Serialize(ViewBag.devices_in_last_5_minutes))');
+    var gaugeOptions = {
+        chart: {
+            type: 'solidgauge'
+        },
+
+        title: null,
+
+        pane: {
+            center: ['50%', '85%'],
+            size: '140%',
+            startAngle: -90,
+            endAngle: 90,
+            background: {
+                backgroundColor:
+                    Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                innerRadius: '60%',
+                outerRadius: '100%',
+                shape: 'arc'
+            }
+        },
+
+        exporting: {
+            enabled: false
+        },
+
+        tooltip: {
+            enabled: false
+        },
+
+        // the value axis
+        yAxis: {
+            stops: [
+                [0.1, '#55BF3B'], // green
+                [0.5, '#DDDF0D'], // yellow
+                [0.9, '#DF5353'] // red
+            ],
+            lineWidth: 0,
+            tickWidth: 0,
+            minorTickInterval: null,
+            tickAmount: 2,
+            title: {
+                y: -70
+            },
+            labels: {
+                y: 16
+            }
+        },
+
+        plotOptions: {
+            solidgauge: {
+                dataLabels: {
+                    y: 5,
+                    borderWidth: 0,
+                    useHTML: true
+                }
+            }
+        }
+    };
+
+    // The gauge
+    var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
+        yAxis: {
+            min: 0,
+            max: 30,
+            title: {
+                text: ''
+            }
+        },
+
+        credits: {
+            enabled: false
+        },
+
+        series: [{
+            name: 'People',
+            data: [unique_devices],
+            dataLabels: {
+                format:
+                    '<div style="text-align:center">' +
+                    '<span style="font-size:25px">{y}</span><br/>' +
+                    '<span style="font-size:12px;opacity:0.4">Persons detected</span>' +
+                    '</div>'
+            },
+            tooltip: {
+                valueSuffix: 'People'
+            }
+        }]
+
+    }));
+
+</script>
+
+<script>
+
+    
+
+    var todays_numbers = JSON.parse('@Html.Raw(Json.Serialize(ViewBag.todays_data))');
+    var yesterdays_numbers = JSON.parse('@Html.Raw(Json.Serialize(ViewBag.yesterdays_data))');
+
+    var Time24 = []
+    var Todays_Datapoints = []
+    var Yesterdays_Datapoints = []
+
+    for (var i = 0; i < todays_numbers.length; i++) {
+        Time24.push(todays_numbers[i].name);
+        Todays_Datapoints.push(todays_numbers[i].count);
+    }
+
+    for (var n = 0; n < yesterdays_numbers.length; n++) {
+        Yesterdays_Datapoints.push(yesterdays_numbers[n].count);
+    }
+
+    Highcharts.chart('container', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Occupancy Rates'
+        },
+        subtitle: {
+            text: 'Daily and Hourly Analysis'
+        },
+        xAxis: {
+            categories: Time24
+        },
+        yAxis: {
+            title: {
+                text: 'Number of detections'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Today',
+            data: Todays_Datapoints
+        }, {
+            name: 'Yesterday',
+                data: Yesterdays_Datapoints
+        }]
+    });
+
+
+
+</script>

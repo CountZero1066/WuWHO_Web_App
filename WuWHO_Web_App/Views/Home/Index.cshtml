@@ -6,12 +6,129 @@
     <div class="mbr-section__container mbr-section__container--std-top-padding container" style="padding-top: 93px; margin-bottom: 31px;">
         <div class="row">
             <div class="text-center">
-                <h1 class="display-4">WuWHO Database Demo</h1>
-                <p>Built in ASP.Net Core MVC and the Microsoft Entity Framework</p>
+                <h1 class="display-4"><bold>WuWHO</bold> </h1>
+                <h1 class="display-4">version 1.0 System Demo</h1>
+                <br />
+                    <p>Built in ASP.Net Core MVC using the Microsoft Entity Framework, Pomelo MySQL connector,</p>
+                    <p>Highcharts and a Twitter API interface class (courtesy of <a href="https://blog.dantup.com/2016/07/simplest-csharp-code-to-post-a-tweet-using-oauth/">Mr Daniel Tuppeny</a>)</p>
 
-                <div><a class="mbr-buttons__link btn text-white" asp-area="" asp-controller="Home" asp-action="Tweet">Post a Tweet</a></div>
-                
+
+
             </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section mbr-section--relative mbr-section--fixed-size mbr-parallax-background mbr-after-navbar" id="content5-c" data-rv-view="29" style="background-image: url(/assets/images/bg3.jpg);">
+    <div class="mbr-overlay" style="opacity: 0.2; background-color: rgb(40, 50, 78);"></div>
+    <div class="mbr-section__container container mbr-section__container--first" style="padding-top: 93px;">
+        <div class="mbr-header mbr-header--wysiwyg row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h3 class="mbr-header__text">WuWHO version 1.0</h3>
+
+            </div>
+        </div>
+    </div>
+    <div class="mbr-section__container container mbr-section__container--middle">
+        <div class="row">
+            <div class="mbr-article mbr-article--wysiwyg col-sm-8 col-sm-offset-2"><p style="color:white">The WuWHO web application is primarily designed as a platform for automatically posting Twitter Tweets via the Twitter API, using data drawn from the WuWHO database. The WuWHO web applications secondary function is to serve as a test-bed for developing features that would enhance the value proposition of the WuWHO system for business customers, by providing analytical tools to users that can yield insights revealed through interrogating data drawn from their businesses via the ESP32 based WuWHO sensor units.&nbsp;&nbsp;</p><p style="color:white">This web application fulfills its primary function and serves as a proof-of-concept for its secondary features. Ultimately the web application, if further developed, would serve as a business customer interface and include user account registration and login features, along with a means for registering one or many ESP32 based WuWHO sensor units to a business customers account and in turn, support many accounts for many business users.</p></div>
+        </div>
+    </div>
+    <div class="mbr-section__container container mbr-section__container--last" style="padding-bottom: 93px;">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="mbr-buttons mbr-buttons--center btn-inverse"><a class="mbr-buttons__btn btn btn-lg btn-default" href="https://github.com/rj1066">GitHub</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section mbr-section--relative mbr-section--fixed-size" id="content4-e" data-rv-view="25" style="background-color: rgb(255, 255, 255);">
+
+    <div class="mbr-section__container mbr-section__container--std-top-padding mbr-section__container--sm-bot-padding mbr-section-title container" style="padding-top: 93px;">
+        <div class="mbr-header mbr-header--center mbr-header--wysiwyg row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h3 class="mbr-header__text">Web Application components</h3>
+
+            </div>
+        </div>
+    </div>
+    <div class="mbr-section__container container">
+        <div class="mbr-section__row row">
+            <div class="mbr-section__col col-xs-12 col-lg-2-4 col-md-4 col-sm-6">
+
+                <div class="mbr-section__container mbr-section__container--middle">
+                    <div class="mbr-header mbr-header--reduce mbr-header--center mbr-header--wysiwyg">
+                        <h3 class="mbr-header__text">Microsoft Entity Framework</h3>
+                    </div>
+                </div>
+                <div class="mbr-section__container mbr-section__container--last" style="padding-bottom: 93px;">
+                    <div class="mbr-article mbr-article--wysiwyg">
+                        <p>Used as a persistence framework for managing database connections, accessing database objects and mapping database tables</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="mbr-section__col col-xs-12 col-lg-2-4 col-md-4 col-sm-6">
+
+                <div class="mbr-section__container mbr-section__container--middle">
+                    <div class="mbr-header mbr-header--reduce mbr-header--center mbr-header--wysiwyg">
+                        <h3 class="mbr-header__text">Twitter API</h3>
+                    </div>
+                </div>
+                <div class="mbr-section__container mbr-section__container--last" style="padding-bottom: 93px;">
+                    <div class="mbr-article mbr-article--wysiwyg">
+                        <p>Using code drawn from Mr Daniel Tuppeny, the Twitter API can be used for posting Tweets to the WuWHO Twitter account without the need for additional Nuget packages</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearfix visible-sm-block"></div>
+            <div class="mbr-section__col col-xs-12 col-lg-2-4 col-md-4 col-sm-6">
+
+                <div class="mbr-section__container mbr-section__container--middle">
+                    <div class="mbr-header mbr-header--reduce mbr-header--center mbr-header--wysiwyg">
+                        <h3 class="mbr-header__text">iHostedServices</h3>
+                    </div>
+                </div>
+                <div class="mbr-section__container mbr-section__container--last" style="padding-bottom: 93px;">
+                    <div class="mbr-article mbr-article--wysiwyg">
+                        <p>Allows an asynchronous background task to invoke the Twitter class every five minutes (so long as the web app is running)</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearfix visible-md-block"></div>
+            <div class="mbr-section__col col-xs-12 col-lg-2-4 col-md-4 col-sm-6 col-lg-offset-0 col-md-offset-2">
+
+                <div class="mbr-section__container mbr-section__container--middle">
+                    <div class="mbr-header mbr-header--reduce mbr-header--center mbr-header--wysiwyg">
+                        <h3 class="mbr-header__text">Highcharts</h3>
+                    </div>
+                </div>
+                <div class="mbr-section__container mbr-section__container--last" style="padding-bottom: 93px;">
+                    <div class="mbr-article mbr-article--wysiwyg">
+                        <p>Highcharts provide free to use (for personal and academic projects) libraries for charting data and is written in pure JavaScript. On the 'VIEW CHART' page, you can see database data bound to a few examples&nbsp;&nbsp;</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearfix visible-sm-block"></div>
+            <div class="mbr-section__col col-xs-12 col-lg-2-4 col-md-4 col-sm-6 col-md-offset-0 col-sm-offset-3">
+
+                <div class="mbr-section__container mbr-section__container--middle">
+                    <div class="mbr-header mbr-header--reduce mbr-header--center mbr-header--wysiwyg">
+                        <h3 class="mbr-header__text">Pomelo</h3>
+                    </div>
+                </div>
+                <div class="mbr-section__container mbr-section__container--last" style="padding-bottom: 93px;">
+                    <div class="mbr-article mbr-article--wysiwyg">
+                        <p>Technically a fork of MySQL, MariaDB database compatibility between itself and the Microsoft Entity Framework is facilitated by Pomelos EntityFrameworkCore&nbsp;&nbsp;</p>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </section>
