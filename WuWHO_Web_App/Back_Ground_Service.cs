@@ -39,8 +39,32 @@ namespace WuWHO_Web_App
 
                     try
                     {
-                        int total_detect = cur_context.tbl_environment_4.Where(m => m.MAC_ID != "end of statement").Count();
-                        Twitter.Sendtweet("Total Detections: " + total_detect.ToString());
+                        var FiveMinAgo = DateTime.Now.AddHours(-0.1);
+                        var devices_in_last_5_minutes = cur_context.tbl_environment_4.Where(m => m.MAC_ID != "end of statement").Where(m => m.time_rec >= FiveMinAgo).Select(m => m.MAC_ID).Distinct().Count();
+
+                        var total_detect = cur_context.tbl_environment_4.Where(m => m.MAC_ID != "end of statement").Count();
+
+                        if (devices_in_last_5_minutes <= 1)
+                        {
+                            Twitter.Sendtweet("Pretty vacant with only " + devices_in_last_5_minutes + " people detected with Total Detections = " + total_detect.ToString());
+                        }
+                        else if(devices_in_last_5_minutes >= 10 || devices_in_last_5_minutes <= 15)
+                        {
+                            Twitter.Sendtweet("Getting fairly crowded with " + devices_in_last_5_minutes + " people detected with Total Detections = " + total_detect.ToString());
+                        }
+                        else if(devices_in_last_5_minutes >15 || devices_in_last_5_minutes <=19)
+                        {
+                            Twitter.Sendtweet("Almost full with " + devices_in_last_5_minutes + " people detected with Total Detections = " + total_detect.ToString());
+                        }
+                        else if(devices_in_last_5_minutes >=20) 
+                        {
+                            Twitter.Sendtweet("Maximum Capacity reached with " + devices_in_last_5_minutes + " people detected with Total Detections = " + total_detect.ToString());
+                        }
+                        else
+                        {
+                            Twitter.Sendtweet("error " + devices_in_last_5_minutes);
+                        }
+                       
                     }
                     catch (Exception ex)
                     {
